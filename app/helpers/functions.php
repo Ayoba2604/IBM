@@ -121,6 +121,15 @@ function status_class(string $status): string
         default => "secondary",
     };
 }
+function modality_label(string $modality): string
+{
+    return match ($modality) {
+        "presencial" => "Presencial",
+        "online" => "On-line",
+        "hibrida" => "Híbrida",
+        default => $modality,
+    };
+}
 function date_br(?string $date, bool $time = false): string
 {
     if (!$date) {

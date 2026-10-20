@@ -1,6 +1,81 @@
 <?php
 declare(strict_types=1);
 
+if ($currentPage === "invitations") {
+    require_role(["avaliador"]);
+    $items = rows(
+        "SELECT c.id AS convite_id,c.status AS convite_status,c.expira_em,b.*,t.titulo,ba.status_resposta FROM convites c JOIN banca_avaliadores ba ON ba.id=c.banca_avaliador_id JOIN bancas b ON b.id=ba.banca_id JOIN trabalhos t ON t.id=b.trabalho_id WHERE ba.avaliador_id=? ORDER BY b.data_banca DESC,c.created_at DESC",
+        [$u["id"]],
+    );
+    layout_start("Meus convites");
+    ?>
+    <section class="panel timeline">
+        <?php foreach ($items as $item): ?>
+            <div class="event">
+                <time><b><?= date("d", strtotime($item["data_banca"])) ?></b><small><?= strtoupper(date("M", strtotime($item["data_banca"]))) ?></small></time>
+                <div><strong><?= e($item["titulo"]) ?></strong><span><?= e(modality_label($item["modalidade"])) ?> · <?= e($item["status_resposta"]) ?></span></div>
+                <?php if ($item["convite_status"] === "pendente" && (!$item["expira_em"] || strtotime($item["expira_em"]) >= time())): ?>
+                    <form class="invite-actions" method="post">
+                        <input type="hidden" name="action" value="respond_invite">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="convite_id" value="<?= (int) $item["convite_id"] ?>">
+                        <button class="btn primary" name="answer" value="aceito">Aceitar</button>
+                        <button class="btn warning" name="answer" value="recusado">Recusar</button>
+                    </form>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+        <?php if (!$items): ?><div class="empty">Nenhum convite recebido.</div><?php endif; ?>
+    </section>
+    <?php
+    layout_end();
+    exit();
+}
+
+if ($currentPage === "invite") {
+    $token = trim($_GET["token"] ?? "");
+    if (isset($_GET["respondido"])) {
+        layout_start("Convite respondido");
+        ?><section class="invite-result panel"><span class="eyebrow">RESPOSTA REGISTRADA</span><h2>Obrigado por responder ao convite.</h2></section><?php
+        layout_end();
+        exit();
+    }
+    $invite = $token !== ""
+        ? one(
+            "SELECT c.status,c.expira_em,ba.avaliador_id,b.data_banca,b.hora_inicio,b.modalidade,b.local,t.titulo,u.nome AS avaliador_nome FROM convites c JOIN banca_avaliadores ba ON ba.id=c.banca_avaliador_id JOIN bancas b ON b.id=ba.banca_id JOIN trabalhos t ON t.id=b.trabalho_id JOIN usuarios u ON u.id=ba.avaliador_id WHERE c.token_hash=?",
+            [TokenService::hash($token)],
+        )
+        : null;
+    $valid = $invite && $invite["status"] === "pendente" && (!$invite["expira_em"] || strtotime($invite["expira_em"]) >= time());
+    if ($valid && is_logged_in() && (int) current_user()["id"] !== (int) $invite["avaliador_id"]) {
+        $valid = false;
+    }
+    layout_start("Convite para banca");
+    ?>
+    <section class="invite-result panel">
+        <?php if ($valid): ?>
+            <span class="eyebrow">CONVITE SIG-BANCA</span>
+            <h2><?= e($invite["titulo"]) ?></h2>
+            <p>Olá, <?= e($invite["avaliador_nome"]) ?>. Você foi convidado(a) para avaliar esta banca.</p>
+            <p><?= date_br($invite["data_banca"]) ?> às <?= e(substr($invite["hora_inicio"], 0, 5)) ?> · <?= e(modality_label($invite["modalidade"])) ?> · <?= e($invite["local"] ?? "") ?></p>
+            <form class="invite-actions" method="post">
+                <input type="hidden" name="action" value="respond_invite">
+                <?= csrf_field() ?>
+                <input type="hidden" name="token" value="<?= e($token) ?>">
+                <button class="btn primary" name="answer" value="aceito">Aceitar convite</button>
+                <button class="btn warning" name="answer" value="recusado">Recusar convite</button>
+            </form>
+        <?php else: ?>
+            <span class="eyebrow">CONVITE INDISPONÍVEL</span>
+            <h2>Este link não é válido.</h2>
+            <p>O convite pode ter expirado, já ter sido respondido ou pertencer a outra conta.</p>
+        <?php endif; ?>
+    </section>
+    <?php
+    layout_end();
+    exit();
+}
+
 if ($currentPage === "works") {
 
     $where =
@@ -111,7 +186,7 @@ foreach ($bancas as $b): ?><a class="event" href="?page=banca&id=<?= $b[
 ) ?></strong><span><?= date_br($b["data_banca"]) ?> · <?= e(
      substr($b["hora_inicio"], 0, 5),
  ) ?> · <?=
-  e(ucfirst($b["modalidade"]));
+  e(modality_label($b["modalidade"]));
   echo $b["local"] ? " · " . e($b["local"]) : "";
  ?></span></div><span class="badge <?= status_class($b["status"]) ?>"><?= e(
     status_label($b["status"]),
@@ -231,7 +306,7 @@ endif; ?></article></section>
     date("M", strtotime($b["data_banca"])),
 ) ?></small></time><div><strong><?= date_br($b["data_banca"]) ?> · <?= e(
      substr($b["hora_inicio"], 0, 5),
- ) ?></strong><span><?= e(ucfirst($b["modalidade"])) ?> · <?= e(
+ ) ?></strong><span><?= e(modality_label($b["modalidade"])) ?> · <?= e(
      $b["local"],
  ) ?></span></div></a><?php endforeach;
     if (
@@ -326,7 +401,7 @@ if ($currentPage === "banca") {
     ) ?> · <?= e(substr($b["hora_inicio"], 0, 5)) ?>–<?= e(
     substr($b["hora_fim"], 0, 5),
 ) ?></span><h2><?= e($b["titulo"]) ?></h2><p><?= e(
-    ucfirst($b["modalidade"]),
+    modality_label($b["modalidade"]),
 ) ?> · <?= e($b["local"]) ?></p><span class="badge <?= status_class(
     $b["status"],
 ) ?>"><?= e(
@@ -448,7 +523,7 @@ foreach ($items as $b): ?><div class="event"><time><b><?= date(
 ) ?></b><small><?= strtoupper(
     date("M", strtotime($b["data_banca"])),
 ) ?></small></time><div><strong><?= e($b["titulo"]) ?></strong><span><?= e(
-    ucfirst($b["modalidade"]),
+    modality_label($b["modalidade"]),
 ) ?> · <?= e($b["status_resposta"]) ?></span></div></div><?php endforeach;
 if (!$items): ?><div class="empty">Nenhum convite recebido.</div><?php endif;
 ?></section><?php
