@@ -1,0 +1,85 @@
+--- PAGE 1 ---
+II HACKATHON – FATEC BAURU – AMS/IBM 
+20/10/2026, às 13h – X TECHWEEK 
+ 
+ 
+ 
+Apoio: 
+ 
+ 
+ 
+ 
+TEMA DO II HACKATHON – AMS FATEC BAURU/IBM 
+Tema: Sistema Integrado de Gestão e Agendamento de Bancas de TCC (SIG -Banca) 
+Contextualização 
+O processo de conclusão de curso envolve múltiplos fluxos acadêmicos e operacionais: 
+conciliação de agendas entre docentes, emissão formal de convites, registro da avaliação em 
+ata, conformidade com as diretrizes de publicação institucional e controle de prazos para entrega 
+de versões finais corrigidas. 
+Atualmente, a descentralização dessas etapas acarreta sobrecarga de comunicação manual, 
+risco de extravio de termos e dificuldade no acompanhamento dos prazos regimentais e da 
+submissão ao Repositório Institucional do Conhecimento do Centro Paula Souza (RIC-CPS) 
+— ferramenta responsável por gerenciar, preservar e disseminar a produção científica e 
+tecnológica das Fatecs e Etecs. 
+O Desafio 
+As equipes devem conceber e prototipar uma solução digital funcional voltada à Fatec Bauru que 
+centralize, automatize e dê transparência a todo o ciclo de vida das bancas de Trabalho de 
+Graduação/TCC, desde a formação da banca avaliadora até o depósito final do trabalho.  
+Requisitos e Fluxos Esperados da Solução 
+1. Agendamento e Composição da Banca 
+o O professor orientador cadastra a banca informando dados do trabalho, 
+discente(s), data, horário e modalidade/local. 
+o O orientador seleciona e convida os membros avaliadores diretamente pela 
+interface. 
+2. Comunicação e Confirmação de Participação 
+o Disparo automático de e -mail institucional aos docentes convidados contendo 
+detalhes da banca e link com token para confirmação. 
+o Módulo de resposta rápida para o professor convidado aceitar ou recusar 
+formalmente a participação. 
+3. Pós-Banca e Gestão Documental 
+o Área dedicada para o orientador anexar e submeter a  Ata de Defesa  
+preenchida/assinada. 
+o Upload e validação do termo de  Autorização RIC-CPS, preparando o trabalho 
+para o fluxo de catalogação e depósito institucional. 
+4. Ciclo de Ajustes e Versão Final 
+o Gestão do prazo regimental de  15 dias corridos  para o discente submeter a 
+versão definitiva após as correções indicadas pela banca. 
+o Mecanismo de validação e aprovação final (aval formal) por parte do orientador 
+antes do encerramento do processo. 
+5. Painel de Consultas e Relatórios 
+o Módulo de busca dinâmica e filtros avançados abertos à comunidade acadêmica 
+e coordenações: 
+▪ Consulta por Curso. 
+▪ Consulta por Aluno. 
+--- PAGE 2 ---
+II HACKATHON – FATEC BAURU – AMS/IBM 
+20/10/2026, às 13h – X TECHWEEK 
+ 
+ 
+ 
+Apoio: 
+ 
+ 
+ 
+ 
+▪ Consulta por Orientador. 
+▪ Consulta por Docente Avaliador (membro da banca). 
+▪ Filtros temporais (semestre/ano letivo) e de status (agendada, realizada, 
+pendente de correção, concluída). 
+Entregáveis Esperados 
+• Protótipo navegável (alta fidelidade ou aplicação funcional) demonstrando as jornadas 
+do orientador, do membro convidado, do aluno e da consulta pública/coordenação. 
+• Modelagem da solução  (arquitetura do fluxo de dados e diagrama de estados do 
+processo). 
+• Pitch de apresentação  (demonstração da usabilidade, aderência às regras 
+institucionais do CPS e diferenciais de automação). 
+Critérios de Avaliação 
+1. Design e Usabilidade (UI/UX): Fluidez da experiência do usuário, organização visual, 
+acessibilidade e clareza da interface.  
+2. Adequação ao Tema: Grau de relevância da solução apresentada em relação ao 
+problema proposto no início do evento.  
+3. Estrutura do Sistema: Qualidade técnica do protótipo, lógica de fu ncionamento, 
+arquitetura adotada e integração coerente com recursos de IA.  
+4. Apresentação Final ( Pitch): Clareza na comunicação da equipe, síntese da proposta 
+de valor, demonstração prática da ferramenta e gestão do tempo de fala  
+ 

@@ -3,5 +3,7 @@
 !/storage/uploads/.gitkeep
 /storage/mail-outbox/*
 !/storage/mail-outbox/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
 *.log
 vendor/

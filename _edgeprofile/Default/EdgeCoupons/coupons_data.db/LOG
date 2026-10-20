@@ -1,0 +1,5 @@
+2026/10/20-16:42:35.174 4f88 Creating DB C:\xampp\htdocs\IBM\_edgeprofile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/10/20-16:42:35.191 4f88 Reusing MANIFEST C:\xampp\htdocs\IBM\_edgeprofile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/10/20-16:42:36.670 4c08 Level-0 table #5: started
+2026/10/20-16:42:36.675 4c08 Level-0 table #5: 683273 bytes OK
+2026/10/20-16:42:36.678 4c08 Delete type=0 #3

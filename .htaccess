@@ -1,0 +1,24 @@
+# Segurança do diretório raiz
+# O DocumentRoot recomendado é a pasta public/. Este arquivo protege a
+# instalação quando o projeto inteiro fica exposto em htdocs (ex.: XAMPP).
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Nunca expor configuração, banco de dados, armazenamento ou código interno.
+    RewriteRule ^\.env - [F,L]
+    RewriteRule ^(app|database|storage)(/|$) - [F,L]
+</IfModule>
+
+<FilesMatch "(^\.|\.(sql|log|md)$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
