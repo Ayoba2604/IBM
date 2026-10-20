@@ -2,6 +2,8 @@
 
 MVP web para acompanhar bancas de TCC da Fatec Bauru, criado em PHP 8, MySQL, HTML, CSS e JavaScript puro.
 
+Documentação: [pitch do projeto](PITCH.md) · [como o projeto foi feito](COMO_FOI_FEITO.md).
+
 ## Como executar no WAMP
 
 1. Crie as tabelas importando `database/schema.sql` no phpMyAdmin.
@@ -39,7 +41,7 @@ Todas usam a senha `password`:
 - Serviços preparados para tokens seguros, upload de PDF fora da pasta pública, prazo de 15 dias corridos e caixa de saída local de e-mails.
 - Interface responsiva e acessível, sem frameworks pesados.
 
-## Configuracao de e-mail e arquivos
+## Configuração de e-mail e arquivos
 
 No desenvolvimento, convites podem ser registrados em `storage/mail-outbox`; essa pasta não entra no Git. Configure PHPMailer/SMTP por variáveis locais antes de enviar e-mail real. Uploads devem permanecer em `storage/uploads`, também fora de `public`. O PDO define `@sig_usuario_id` por conexão para que os triggers atribuam eventos ao usuário autenticado.
 
